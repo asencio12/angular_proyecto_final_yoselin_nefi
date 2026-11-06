@@ -1,0 +1,28 @@
+<h3>Formularios reactivos</h3>
+<form [formGroup]="personalDataForm" (ngSubmit)="save()">
+  <section class="container">
+    
+    <!-- Primer nombre -->
+    <mat-form-field appearance="outline">
+      <mat-label>Primer nombre</mat-label>
+      <input matInput formControlName="firstName" placeholder="Melvin">
+      @if (personalDataForm.controls.firstName.invalid && personalDataForm.controls.firstName.hasError('required')) {
+        <mat-error>El dato es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Segundo nombre -->
+    <mat-form-field appearance="outline">
+      <mat-label>Second nombre</mat-label>
+      <input matInput formControlName="secondName" placeholder="Melvin2">
+      @if (personalDataForm.controls.secondName.invalid && personalDataForm.controls.secondName.hasError('required')) {
+        <mat-error>El dato es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- (Puedes replicar la estructura anterior para firstLastName, secondLastName y birthDate) -->
+
+    <!-- Botón de guardado para disparar el ngSubmit -->
+    <button mat-raised-button color="primary" type="submit">Guardar JSON</button>
+  </section>
+</form>

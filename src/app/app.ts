@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { PersonalData } from './pages/personal-data/personal-data';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [ PersonalData],
+  template: `<app-personal-data></app-personal-data>`
 })
-export class App {
-  protected readonly title = signal('angular_proyecto_final_YoselinAsencio_NefiVivar');
+export class AppComponent {
+  title = 'angular_proyecto_final_Yoselin_Nefi';
 }

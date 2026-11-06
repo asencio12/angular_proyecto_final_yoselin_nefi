@@ -1,0 +1,51 @@
+{
+  "genero": [
+    { "id": 1, "value": "Masculino" },
+    { "id": 2, "value": "Femenino" },
+    { "id": 3, "value": "Otro" },
+    { "id": 4, "value": "Prefiero no indicar" }
+  ],
+  "jornada": [
+    { "id": 1, "value": "Matutina" },
+    { "id": 2, "value": "Vespertina" },
+    { "id": 3, "value": "Nocturna" },
+    { "id": 4, "value": "Fin de semana" }
+  ],
+  "modalidad": [
+    { "id": 1, "value": "Presencial" },
+    { "id": 2, "value": "Virtual" },
+    { "id": 3, "value": "Híbrida" }
+  ],
+  "estado": [
+    { "id": 1, "value": "Borrador" },
+    { "id": 2, "value": "Registrada" },
+    { "id": 3, "value": "En revisión" },
+    { "id": 4, "value": "Aprobada" },
+    { "id": 5, "value": "Rechazada" },
+    { "id": 6, "value": "Cancelada" }
+  ],
+  "periodo": [
+    { "id": 1, "value": "2026-1" },
+    { "id": 2, "value": "2026-2" }
+  ],
+  "carrera": [
+    { "id": 1, "value": "Ingeniería en Sistemas" },
+    { "id": 2, "value": "Ingeniería Industrial" },
+    { "id": 3, "value": "Administración de Empresas" }
+  ],
+  "pais": [
+    { "id": 1, "value": "Guatemala" },
+    { "id": 2, "value": "El Salvador" }
+  ],
+  "departamento": [
+    { "id": 1, "value": "Guatemala", "paisId": 1 },
+    { "id": 2, "value": "Sacatepéquez", "paisId": 1 },
+    { "id": 3, "value": "San Salvador", "paisId": 2 }
+  ],
+  "municipio": [
+    { "id": 1, "value": "Guatemala", "departamentoId": 1 },
+    { "id": 2, "value": "Mixco", "departamentoId": 1 },
+    { "id": 3, "value": "Antigua Guatemala", "departamentoId": 2 },
+    { "id": 4, "value": "San Salvador", "departamentoId": 3 }
+  ]
+}
