@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators
@@ -38,6 +38,7 @@ export class StudentForm {
   private catalog = inject(CatalogService);
   private router = inject(Router);
   private snack = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
 
   esEdicion = false;
   hoy = new Date().toISOString().slice(0, 10);
@@ -115,6 +116,9 @@ export class StudentForm {
         this.catalog.getMunicipios(id).subscribe(l => this.municipios.set(l));
       }
     });
+
+    const carnet = this.route.snapshot.paramMap.get('carnet');
+    if (carnet) this.cargarParaEditar(carnet);  
   }
 
   get contactos() {
@@ -138,6 +142,44 @@ agregarContacto() {
 
 quitarContacto(i: number) {
   if (this.contactos.length > 1) this.contactos.removeAt(i);
+}
+
+  private cargarParaEditar(carnet: string) {
+  const s = this.studentService.getByCarnet(carnet);
+  if (!s) {
+    this.snack.open('El estudiante no existe', 'Cerrar', { duration: 3000 });
+    this.router.navigate(['/estudiantes']);
+    return;
+  }
+
+  this.esEdicion = true;
+  this.form.controls.carnet.disable();   // el carnet es la llave, no se edita
+
+  // Cargamos las listas encadenadas antes de asignar valores
+  this.catalog.getDepartamentos(s.pais.id).subscribe(l => this.departamentos.set(l));
+  this.catalog.getMunicipios(s.departamento.id).subscribe(l => this.municipios.set(l));
+
+  // Una fila de contacto por cada contacto guardado
+  this.contactos.clear();
+  s.contactos.forEach(() => this.contactos.push(this.nuevoContacto()));
+
+  // emitEvent:false evita que se disparen los "reset" de las listas encadenadas
+  this.form.patchValue({
+    carnet: s.carnet,
+    nombres: s.nombres,
+    apellidos: s.apellidos,
+    fechaNacimiento: s.fechaNacimiento,
+    genero: s.genero.id,
+    email: s.email,
+    direccion: s.direccion,
+    pais: s.pais.id,
+    departamento: s.departamento.id,
+    municipio: s.municipio.id,
+    carrera: s.carrera.id,
+    semestre: s.semestre,
+    contactos: s.contactos
+  }, { emitEvent: false });
+  
 }
 
   // Devuelve el mensaje de error de un control
