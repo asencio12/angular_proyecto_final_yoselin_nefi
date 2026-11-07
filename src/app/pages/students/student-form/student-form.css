@@ -1,0 +1,53 @@
+.formulario { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+}
+
+mat-card { 
+    padding: 16px; 
+}
+
+h3 { 
+    margin: 0 0 12px; 
+}
+
+.rejilla { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+    gap: 0 16px;
+
+}
+.completo { 
+    grid-column: 1 / -1; 
+}
+
+.genero { 
+    margin-top: 4px; 
+}
+
+.etiqueta-grupo { 
+    display: block; 
+    margin-bottom: 4px; 
+    font-size: 14px; 
+}
+.radios { 
+    display: flex; 
+    flex-wrap: wrap; gap: 8px; 
+}
+
+.error-manual { 
+    color: var(--mat-sys-error); 
+    font-size: 12px; 
+}
+.acciones { display: flex; 
+    justify-content: flex-end; 
+    align-items: center; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+}
+
+.nota { color: var(--mat-sys-on-surface-variant); 
+    font-size: 13px; 
+    margin-right: auto; 
+}

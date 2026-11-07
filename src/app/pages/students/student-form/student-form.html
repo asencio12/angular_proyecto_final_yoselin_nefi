@@ -1,1 +1,131 @@
-<p>student-form works!</p>
+<h2>{{ esEdicion ? 'Editar estudiante' : 'Nuevo estudiante' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+
+  <mat-card>
+    <h3>Datos personales</h3>
+    <div class="rejilla">
+      <mat-form-field appearance="outline">
+        <mat-label>Carnet</mat-label>
+        <input matInput formControlName="carnet" placeholder="EST-001">
+        <mat-error>{{ mensaje(form.controls.carnet) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombres</mat-label>
+        <input matInput formControlName="nombres">
+        <mat-error>{{ mensaje(form.controls.nombres) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="apellidos">
+        <mat-error>{{ mensaje(form.controls.apellidos) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput type="date" formControlName="fechaNacimiento" [max]="hoy">
+        <mat-error>{{ mensaje(form.controls.fechaNacimiento) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="nombre@dominio.com">
+        <mat-error>{{ mensaje(form.controls.email) }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="genero">
+      <span class="etiqueta-grupo">Género <span class="req">*</span></span>
+      <mat-radio-group formControlName="genero" class="radios">
+        @for (g of generos(); track g.id) {
+          <mat-radio-button [value]="g.id">{{ g.value }}</mat-radio-button>
+        }
+      </mat-radio-group>
+      @if (form.controls.genero.touched && form.controls.genero.invalid) {
+        <div class="error-manual">Seleccione un género</div>
+      }
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <h3>Residencia</h3>
+    <div class="rejilla">
+      <mat-form-field appearance="outline">
+        <mat-label>País</mat-label>
+        <mat-select formControlName="pais">
+          @for (p of paises(); track p.id) {
+            <mat-option [value]="p.id">{{ p.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>{{ mensaje(form.controls.pais) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Departamento</mat-label>
+        <mat-select formControlName="departamento">
+          @for (d of departamentos(); track d.id) {
+            <mat-option [value]="d.id">{{ d.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>Primero seleccione el país</mat-hint>
+        <mat-error>{{ mensaje(form.controls.departamento) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Municipio</mat-label>
+        <mat-select formControlName="municipio">
+          @for (m of municipios(); track m.id) {
+            <mat-option [value]="m.id">{{ m.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>Primero seleccione el departamento</mat-hint>
+        <mat-error>{{ mensaje(form.controls.municipio) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="completo">
+        <mat-label>Dirección de residencia</mat-label>
+        <input matInput formControlName="direccion">
+        <mat-error>{{ mensaje(form.controls.direccion) }}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <h3>Datos académicos</h3>
+    <div class="rejilla">
+      <mat-form-field appearance="outline">
+        <mat-label>Carrera</mat-label>
+        <mat-select formControlName="carrera">
+          @for (c of carreras(); track c.id) {
+            <mat-option [value]="c.id">{{ c.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>{{ mensaje(form.controls.carrera) }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Semestre</mat-label>
+        <mat-select formControlName="semestre">
+          @for (s of semestres; track s) {
+            <mat-option [value]="s">{{ s }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>{{ mensaje(form.controls.semestre) }}</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- AQUÍ VA EL BLOQUE DE CONTACTOS (paso 4b) -->
+
+  <div class="acciones">
+    @if (form.invalid) {
+      <span class="nota">Complete los campos obligatorios (*) para guardar.</span>
+    }
+    <a mat-button routerLink="/estudiantes">Cancelar</a>
+    <button mat-flat-button type="submit" [disabled]="form.invalid">
+      <mat-icon>save</mat-icon> Guardar
+    </button>
+  </div>
+</form>
