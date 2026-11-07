@@ -17,10 +17,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { StudentService } from '../../../services/student.service';
 import { CatalogService } from '../../../services/catalog.service';
 import { CatalogItem } from '../../../models/catalog.model';
-import { Student } from '../../../models/student.model';
+import { Student, TipoContacto } from '../../../models/student.model';
 import {
   fechaNacimientoValida, patronConMensaje, sinSoloEspacios
 } from '../../../validators/validators';
+
 
 @Component({
   selector: 'app-student-form',
@@ -41,6 +42,13 @@ export class StudentForm {
   esEdicion = false;
   hoy = new Date().toISOString().slice(0, 10);
   semestres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  tipos: { valor: TipoContacto; etiqueta: string}[] = [
+    { valor: 'movil', etiqueta: 'Movil'},
+    { valor: 'casa', etiqueta: 'Casa' },
+    { valor: 'trabajo', etiqueta: 'Trabajo' },
+    { valor: 'otro', etiqueta: 'Otro' }
+  ];
 
   // Catálogos
   generos = toSignal(this.catalog.getLista('genero'), { initialValue: [] });
@@ -82,7 +90,9 @@ export class StudentForm {
     departamento: [null as number | null, Validators.required],
     municipio: [null as number | null, Validators.required],
     carrera: [null as number | null, Validators.required],
-    semestre: [null as number | null, Validators.required]
+    semestre: [null as number | null, Validators.required],
+    contactos: this.fb.array([this.nuevoContacto()], 
+    Validators.minLength(1))
   });
 
   constructor() {
@@ -106,6 +116,29 @@ export class StudentForm {
       }
     });
   }
+
+  get contactos() {
+  return this.form.controls.contactos;
+}
+
+private nuevoContacto() {
+  return this.fb.group({
+    numero: ['', [
+      Validators.required, sinSoloEspacios,
+      patronConMensaje(/^\+?[0-9\s-]{8,15}$/, 'Use de 8 a 15 dígitos (puede incluir +, espacios o guiones)')
+    ]],
+    tipo: ['movil' as TipoContacto, Validators.required],
+    activo: [true]
+  });
+}
+
+agregarContacto() {
+  this.contactos.push(this.nuevoContacto());
+}
+
+quitarContacto(i: number) {
+  if (this.contactos.length > 1) this.contactos.removeAt(i);
+}
 
   // Devuelve el mensaje de error de un control
   mensaje(c: AbstractControl | null): string {
@@ -142,7 +175,11 @@ export class StudentForm {
       municipio: this.buscar(this.municipios(), v.municipio),
       carrera: this.buscar(this.carreras(), v.carrera),
       semestre: v.semestre!,
-      contactos: []   // se completa en el paso 4b
+      contactos: v.contactos.map(c => ({
+        numero: c.numero!.trim(),
+        tipo: c.tipo!,
+        activo: !!c.activo
+      }))   // se completa en el paso 4b
     };
 
     const r = this.esEdicion ? this.studentService.update(student) : this.studentService.add(student);

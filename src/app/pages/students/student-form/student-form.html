@@ -117,7 +117,39 @@
     </div>
   </mat-card>
 
-  <!-- AQUÍ VA EL BLOQUE DE CONTACTOS (paso 4b) -->
+  <mat-card>
+  <h3>Contactos</h3>
+  <div formArrayName="contactos">
+    @for (c of form.controls.contactos.controls; track $index; let i = $index) {
+      <div class="contacto" [formGroupName]="i">
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="numero" inputmode="tel" placeholder="5555 1234">
+          <mat-error>{{ mensaje(c.controls.numero) }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="tipo">
+            @for (t of tipos; track t.valor) {
+              <mat-option [value]="t.valor">{{ t.etiqueta }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+
+        <button mat-icon-button type="button" (click)="quitarContacto(i)"
+                [disabled]="form.controls.contactos.length === 1" aria-label="Quitar número">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+  <button mat-stroked-button type="button" (click)="agregarContacto()">
+    <mat-icon>add</mat-icon> Agregar número
+  </button>
+</mat-card>
 
   <div class="acciones">
     @if (form.invalid) {
