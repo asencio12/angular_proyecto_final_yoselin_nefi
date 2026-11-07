@@ -1,3 +1,5 @@
+import { CatalogItem } from './catalog.model';
+
 export type TipoContacto = 'movil' | 'casa' | 'trabajo' | 'otro';
 
 export interface Contacto {
@@ -7,15 +9,17 @@ export interface Contacto {
 }
 
 export interface Student {
-  id: string;
+  carnet: string;
   nombres: string;
   apellidos: string;
   fechaNacimiento: string;
-  genero: string;
+  genero: CatalogItem;
   email: string;
   direccion: string;
-  carreraId: string;
-  nacionalidad: string;
-  fechaIngreso: string;
+  pais: CatalogItem;
+  departamento: CatalogItem;
+  municipio: CatalogItem;
+  carrera: CatalogItem;
+  semestre: number;
   contactos: Contacto[];
 }
