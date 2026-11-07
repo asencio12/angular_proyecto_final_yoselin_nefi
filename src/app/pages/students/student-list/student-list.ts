@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { StudentDetailDialog } from '../student-detail-dialog/student-detail-dialog';
+import { EnrollmentService } from '../../../services/enrollment.service';
 
 @Component({
   selector: 'app-student-list',
@@ -37,6 +38,7 @@ export class StudentList {
   private catalogService = inject(CatalogService);
   private dialog = inject(MatDialog);
   private snack = inject(MatSnackBar);
+  private enrollmentService = inject(EnrollmentService);
 
   estudiantes = signal<Student[]>(this.studentService.getAll());
   carreras = toSignal(this.catalogService.getLista('carrera'), { initialValue: [] });
@@ -74,6 +76,14 @@ export class StudentList {
 }
 
 eliminar(e: Student) {
+  if (this.enrollmentService.getByEstudiante(e.carnet).length > 0) {
+  this.snack.open(
+    'No se puede eliminar: el estudiante tiene inscripciones registradas.',
+    'Cerrar',
+    { duration: 5000 }
+  );
+  return;
+}
   this.dialog
     .open(ConfirmDialog, {
       data: {
