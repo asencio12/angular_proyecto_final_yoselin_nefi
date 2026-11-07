@@ -1,1 +1,81 @@
-<p>student-list works!</p>
+<div class="encabezado">
+  <h2>Estudiantes</h2>
+  <a mat-flat-button routerLink="/estudiantes/nuevo">
+    <mat-icon>add</mat-icon> Nuevo estudiante
+  </a>
+</div>
+
+<mat-card class="filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Buscar (carnet, nombre o correo)</mat-label>
+    <input matInput [value]="busqueda()" (input)="busqueda.set($any($event.target).value)">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Carrera</mat-label>
+    <mat-select [value]="carreraId()" (selectionChange)="carreraId.set($event.value)">
+      <mat-option [value]="null">Todas</mat-option>
+      @for (c of carreras(); track c.id) {
+        <mat-option [value]="c.id">{{ c.value }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Semestre</mat-label>
+    <mat-select [value]="semestre()" (selectionChange)="semestre.set($event.value)">
+      <mat-option [value]="null">Todos</mat-option>
+      @for (s of semestres; track s) {
+        <mat-option [value]="s">{{ s }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="limpiarFiltros()">Limpiar filtros</button>
+</mat-card>
+
+<div class="tabla-scroll">
+  <table mat-table [dataSource]="filtrados()">
+
+    <ng-container matColumnDef="carnet">
+      <th mat-header-cell *matHeaderCellDef>Carnet</th>
+      <td mat-cell *matCellDef="let e">{{ e.carnet }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let e">{{ e.nombres }} {{ e.apellidos }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Correo</th>
+      <td mat-cell *matCellDef="let e">{{ e.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="carrera">
+      <th mat-header-cell *matHeaderCellDef>Carrera</th>
+      <td mat-cell *matCellDef="let e">{{ e.carrera.value }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="semestre">
+      <th mat-header-cell *matHeaderCellDef>Semestre</th>
+      <td mat-cell *matCellDef="let e">{{ e.semestre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let e">
+        <a mat-icon-button [routerLink]="['/estudiantes', e.carnet, 'editar']" aria-label="Editar">
+          <mat-icon>edit</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let fila; columns: columnas"></tr>
+  </table>
+</div>
+
+@if (filtrados().length === 0) {
+  <p class="vacio">No hay estudiantes que coincidan. Registre uno con "Nuevo estudiante".</p>
+}

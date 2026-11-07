@@ -1,0 +1,27 @@
+.barra { 
+    position: sticky; 
+    top: 0; 
+    z-index: 10; 
+    gap: 8px; 
+}
+
+.espacio { 
+    flex: 1; 
+}
+
+.menu { 
+    display: flex; 
+    gap: 4px; 
+}
+.activo { 
+    background: var(--mat-sys-secondary-container); 
+}
+.contenido { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 16px; 
+}
+
+@media (max-width: 600px) {
+  .texto, .titulo { display: none; }   /* en celular solo íconos */
+}
