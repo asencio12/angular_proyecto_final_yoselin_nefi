@@ -12,17 +12,31 @@ import { MatCardModule } from '@angular/material/card';
 import { StudentService } from '../../../services/student.service';
 import { CatalogService } from '../../../services/catalog.service';
 import { Student } from '../../../models/student.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
+import { StudentDetailDialog } from '../student-detail-dialog/student-detail-dialog';
 
 @Component({
   selector: 'app-student-list',
-  imports: [RouterLink, MatTableModule, MatFormFieldModule, MatInputModule,
-            MatSelectModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [
+    RouterLink,
+    MatTableModule, 
+    MatFormFieldModule, 
+    MatInputModule,
+    MatSelectModule, 
+    MatButtonModule, 
+    MatIconModule, 
+    MatCardModule
+  ],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css'
 })
 export class StudentList {
   private studentService = inject(StudentService);
   private catalogService = inject(CatalogService);
+  private dialog = inject(MatDialog);
+  private snack = inject(MatSnackBar);
 
   estudiantes = signal<Student[]>(this.studentService.getAll());
   carreras = toSignal(this.catalogService.getLista('carrera'), { initialValue: [] });
@@ -54,4 +68,27 @@ export class StudentList {
   recargar() {
     this.estudiantes.set(this.studentService.getAll());
   }
+
+  ver(e: Student) {
+  this.dialog.open(StudentDetailDialog, { data: e, width: '600px', maxWidth: '95vw' });
+}
+
+eliminar(e: Student) {
+  this.dialog
+    .open(ConfirmDialog, {
+      data: {
+        titulo: 'Eliminar estudiante',
+        mensaje: `¿Desea eliminar a ${e.nombres} ${e.apellidos} (${e.carnet})? Esta acción no se puede deshacer.`,
+        textoConfirmar: 'Eliminar'
+      }
+    })
+    .afterClosed()
+    .subscribe(confirmado => {
+      if (confirmado) {
+        this.studentService.delete(e.carnet);
+        this.recargar();
+        this.snack.open('Estudiante eliminado', 'Cerrar', { duration: 3000 });
+      }
+    });
+}
 }

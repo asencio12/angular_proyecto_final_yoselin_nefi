@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>{{ e.nombres }} {{ e.apellidos }}</h2>
+
+<mat-dialog-content>
+  <div class="rejilla">
+    <div>
+        <span class="etiqueta">Carnet</span>
+        <span>{{ e.carnet }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Fecha de nacimiento</span>
+        <span>{{ e.fechaNacimiento | date: 'dd/MM/yyyy' }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Género</span>
+        <span>{{ e.genero.value }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Correo</span>
+        <span>{{ e.email }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Carrera</span>
+        <span>{{ e.carrera.value }}</span>
+    </div>
+    <div><span class="etiqueta">Semestre</span>
+        <span>{{ e.semestre }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">País</span>
+        <span>{{ e.pais.value }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Departamento</span>
+        <span>{{ e.departamento.value }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Municipio</span>
+        <span>{{ e.municipio.value }}</span>
+    </div>
+    <div>
+        <span class="etiqueta">Dirección</span>
+        <span>{{ e.direccion }}</span>
+    </div>
+  </div>
+
+  <h3>Contactos</h3>
+  @for (c of e.contactos; track $index) {
+    <p class="contacto">
+      {{ c.numero }} · {{ c.tipo }} ·
+      <strong>{{ c.activo ? 'Activo' : 'Inactivo' }}</strong>
+    </p>
+  } @empty {
+    <p>Sin números de contacto.</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
