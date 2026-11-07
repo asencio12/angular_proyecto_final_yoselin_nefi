@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { PersonalData } from './pages/personal-data/personal-data';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ PersonalData],
-  template: `<app-personal-data></app-personal-data>`
+  imports: [ RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatButtonModule, MatIconModule],
+  templateUrl: `./app.html`,
+  styleUrl: './app.css'
 })
 export class AppComponent {
   title = 'angular_proyecto_final_Yoselin_Nefi';

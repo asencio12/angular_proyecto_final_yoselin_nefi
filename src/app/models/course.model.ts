@@ -3,5 +3,5 @@ export interface Course {
   codigo: string;
   nombre: string;
   creditos: number;
-  carreraId: string;
+  carreraId: number;
 }
