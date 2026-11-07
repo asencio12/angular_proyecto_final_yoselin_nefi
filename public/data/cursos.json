@@ -1,0 +1,10 @@
+[
+  { "id": "WEB101", "codigo": "WEB101", "nombre": "Programación Web", "creditos": 5, "carreraId": 1 },
+  { "id": "BD101", "codigo": "BD101", "nombre": "Bases de Datos", "creditos": 5, "carreraId": 1 },
+  { "id": "ALG101", "codigo": "ALG101", "nombre": "Algoritmos", "creditos": 4, "carreraId": 1 },
+  { "id": "RED101", "codigo": "RED101", "nombre": "Redes de Computadoras", "creditos": 4, "carreraId": 1 },
+  { "id": "PRO101", "codigo": "PRO101", "nombre": "Procesos Industriales", "creditos": 4, "carreraId": 2 },
+  { "id": "CAL101", "codigo": "CAL101", "nombre": "Control de Calidad", "creditos": 3, "carreraId": 2 },
+  { "id": "MKT101", "codigo": "MKT101", "nombre": "Mercadotecnia", "creditos": 3, "carreraId": 3 },
+  { "id": "CON101", "codigo": "CON101", "nombre": "Contabilidad General", "creditos": 4, "carreraId": 3 }
+]
