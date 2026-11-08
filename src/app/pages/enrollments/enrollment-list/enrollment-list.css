@@ -1,0 +1,50 @@
+.encabezado { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; flex-wrap: wrap; 
+    gap: 8px; 
+}
+
+.filtros { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+    padding: 16px 16px 0; 
+    align-items: center; 
+    margin-bottom: 16px; 
+}
+
+.filtros mat-form-field { 
+    flex: 1 1 200px; 
+}
+
+.tabla-scroll { 
+    overflow-x: auto; 
+}
+
+table { 
+    width: 100%; 
+}
+
+.estado { 
+    padding: 2px 10px; 
+    border-radius: 12px; 
+    background: var(--mat-sys-secondary-container); 
+    font-size: 13px; 
+    white-space: nowrap; 
+}
+
+.estado.cancelada { 
+    background: var(--mat-sys-error-container); 
+    color: var(--mat-sys-on-error-container); 
+}
+
+.oculto { 
+    visibility: hidden;
+ }
+
+.vacio { 
+    text-align: center; 
+    color: var(--mat-sys-on-surface-variant); 
+    padding: 24px; 
+}
