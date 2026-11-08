@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Inscripción {{ d.inscripcion.id }}</h2>
+
+<mat-dialog-content>
+  <div class="rejilla">
+    <div>
+      <span class="etiqueta">Estudiante</span>
+      @if (d.estudiante) {
+        <span>{{ d.estudiante.carnet }} - {{ d.estudiante.nombres }} {{ d.estudiante.apellidos }}</span>
+      } @else {
+        <span>No encontrado ({{ d.inscripcion.estudianteId }})</span>
+      }
+    </div>
+    <div><span class="etiqueta">Carrera</span><span>{{ d.estudiante?.carrera?.value ?? '-' }}</span></div>
+    <div><span class="etiqueta">Período</span><span>{{ d.inscripcion.periodoId }}</span></div>
+    <div><span class="etiqueta">Estado</span><span>{{ d.inscripcion.estado }}</span></div>
+    <div><span class="etiqueta">Jornada</span><span>{{ d.inscripcion.jornada }}</span></div>
+    <div><span class="etiqueta">Modalidad</span><span>{{ d.inscripcion.modalidad }}</span></div>
+    <div>
+      <span class="etiqueta">Fecha de creación</span>
+      <span>{{ d.inscripcion.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+  </div>
+
+  <h3>Cursos</h3>
+  @for (c of d.cursos; track c.id) {
+    <p class="curso">{{ c.codigo }} - {{ c.nombre }} ({{ c.creditos }} créditos)</p>
+  } @empty {
+    <p>Sin cursos.</p>
+  }
+  <p class="total">Total de créditos: {{ totalCreditos }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
