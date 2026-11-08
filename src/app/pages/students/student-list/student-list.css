@@ -31,3 +31,7 @@ table {
      color: var(--mat-sys-on-surface-variant);
       padding: 24px; 
     }
+
+@media (max-width: 700px) {
+  .col-opcional { display: none; }
+}
