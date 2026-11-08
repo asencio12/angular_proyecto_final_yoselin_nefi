@@ -1,1 +1,118 @@
-<p>enrollment-form works!</p>
+<h2>{{ esEdicion ? 'Editar inscripción ' + idEdicion : 'Nueva inscripción' }}</h2>
+
+@if (estudiantes.length === 0) {
+  <mat-card class="aviso">
+    <p>Todavía no hay estudiantes registrados. Registre uno antes de crear una inscripción.</p>
+    <a mat-flat-button routerLink="/estudiantes/nuevo">Registrar estudiante</a>
+  </mat-card>
+} @else {
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="formulario">
+
+  <mat-card>
+    <h3>Datos de la inscripción</h3>
+    <div class="rejilla">
+      <mat-form-field appearance="outline">
+        <mat-label>Estudiante</mat-label>
+        <mat-select formControlName="estudianteId">
+          @for (e of estudiantes; track e.carnet) {
+            <mat-option [value]="e.carnet">{{ e.carnet }} - {{ e.nombres }} {{ e.apellidos }}</mat-option>
+          }
+        </mat-select>
+        @if (estudianteSel(); as est) {
+          <mat-hint>Carrera: {{ est.carrera.value }}</mat-hint>
+        }
+        <mat-error>Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Período académico</mat-label>
+        <mat-select formControlName="periodoId">
+          @for (p of periodos(); track p.id) {
+            <mat-option [value]="p.value">{{ p.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Jornada</mat-label>
+        <mat-select formControlName="jornada">
+          @for (j of jornadas(); track j.id) {
+            <mat-option [value]="j.value">{{ j.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          @for (s of estados(); track s.id) {
+            <mat-option [value]="s.value">{{ s.value }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>Este campo es obligatorio</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <span class="etiqueta-grupo">Modalidad <span class="req">*</span></span>
+      <mat-radio-group formControlName="modalidad" class="radios">
+        @for (m of modalidades(); track m.id) {
+          <mat-radio-button [value]="m.value">{{ m.value }}</mat-radio-button>
+        }
+      </mat-radio-group>
+      @if (form.controls.modalidad.touched && form.controls.modalidad.invalid) {
+        <div class="error-manual">Seleccione una modalidad</div>
+      }
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <h3>Cursos <span class="req">*</span></h3>
+
+    @if (!estudianteSel()) {
+      <p class="ayuda">Seleccione un estudiante para ver los cursos de su carrera.</p>
+    } @else if (cursosDisponibles().length === 0) {
+      <p class="ayuda">No hay cursos disponibles para la carrera de este estudiante.</p>
+    } @else {
+      <mat-selection-list formControlName="cursoIds" aria-label="Cursos disponibles">
+        @for (c of cursosDisponibles(); track c.id) {
+          <mat-list-option [value]="c.id">
+            {{ c.codigo }} - {{ c.nombre }} ({{ c.creditos }} créditos)
+          </mat-list-option>
+        }
+      </mat-selection-list>
+
+      <p class="creditos">Cursos seleccionados: {{ seleccion().length }} · Créditos: {{ creditos() }}</p>
+
+      @if (form.controls.cursoIds.invalid && (form.controls.cursoIds.touched || form.controls.cursoIds.dirty)) {
+        <div class="error-manual">Seleccione al menos un curso</div>
+      }
+    }
+  </mat-card>
+
+  @if (erroresServicio().length > 0) {
+    <mat-card class="errores" role="alert">
+      <h3>No se pudo guardar la inscripción</h3>
+      <ul>
+        @for (e of erroresServicio(); track $index) {
+          <li>{{ e }}</li>
+        }
+      </ul>
+    </mat-card>
+  }
+
+  <div class="acciones">
+    @if (form.invalid) {
+      <span class="nota">Complete los campos obligatorios (*) para guardar.</span>
+    }
+    <a mat-button routerLink="/inscripciones">Cancelar</a>
+    <button mat-flat-button type="submit" [disabled]="form.invalid">
+      <mat-icon>save</mat-icon> Guardar
+    </button>
+  </div>
+</form>
+
+}
