@@ -1,1 +1,64 @@
-<p>backup works!</p>
+<h2>Respaldo de datos</h2>
+<p class="intro">
+  Los datos se guardan solo en este navegador. Use el respaldo para guardarlos en un archivo
+  o trasladarlos a otro equipo.
+</p>
+
+<div class="columnas">
+
+  <mat-card>
+    <h3>Exportar datos</h3>
+    <p>
+      Genera el archivo <strong>uniregistro_respaldo.json</strong> con los estudiantes y las
+      inscripciones guardados.
+    </p>
+    <p class="resumen">
+      Actualmente: {{ resumen().estudiantes }} estudiantes · {{ resumen().inscripciones }} inscripciones
+    </p>
+    <button mat-flat-button type="button" (click)="exportar()">
+      <mat-icon>download</mat-icon> Exportar datos
+    </button>
+  </mat-card>
+
+  <mat-card>
+    <h3>Importar datos</h3>
+    <p>
+      Seleccione un archivo exportado previamente. Se validará por completo antes de hacer cualquier
+      cambio, y se le pedirá confirmación para reemplazar los datos actuales.
+    </p>
+
+    <input #selector type="file" accept=".json,application/json" hidden (change)="alElegirArchivo($event)">
+    <button mat-stroked-button type="button" (click)="selector.click()" [disabled]="procesando()">
+      <mat-icon>upload</mat-icon> Importar datos
+    </button>
+
+    @if (archivo()) {
+      <p class="archivo">Archivo: {{ archivo() }}</p>
+    }
+    @if (procesando()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+  </mat-card>
+</div>
+
+@if (exito()) {
+  <mat-card class="exito" role="status">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ exito() }}</span>
+  </mat-card>
+}
+
+@if (errores().length > 0) {
+  <mat-card class="errores" role="alert">
+    <h3>No se importó ningún dato</h3>
+    <p>El archivo no es válido. Sus datos actuales no fueron modificados.</p>
+    <ul>
+      @for (e of errores().slice(0, maxVisibles); track $index) {
+        <li>{{ e }}</li>
+      }
+    </ul>
+    @if (errores().length > maxVisibles) {
+      <p>... y {{ errores().length - maxVisibles }} errores más.</p>
+    }
+  </mat-card>
+}

@@ -52,4 +52,9 @@ export class StudentService {
     const lista = this.getAll().filter(s => s.carnet !== carnet);
     this.storage.set(CLAVE, lista);
   }
+
+    // Reemplazar todos los registros (lo usa la importación)
+  replaceAll(lista: Student[]): void {
+    this.storage.set(CLAVE, lista);
+  }
 }

@@ -177,4 +177,9 @@ export class EnrollmentService {
     this.storage.set(CLAVE, lista);
     return true;
   }
+
+    // Reemplazar todos los registros (lo usa la importación)
+  replaceAll(lista: Enrollment[]): void {
+    this.storage.set(CLAVE, lista);
+  }
 }
