@@ -16,9 +16,7 @@ export interface Student {
   genero: CatalogItem;
   email: string;
   direccion: string;
-  pais: CatalogItem;
   departamento: CatalogItem;
-  municipio: CatalogItem;
   carrera: CatalogItem;
   semestre: number;
   contactos: Contacto[];

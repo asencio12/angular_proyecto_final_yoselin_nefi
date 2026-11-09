@@ -18,19 +18,6 @@ export class CatalogService {
     return this.catalogo$.pipe(map(c => c[nombre]));
   }
 
-  // Departamentos que pertenecen a un país
-  getDepartamentos(paisId: number): Observable<CatalogItem[]> {
-    return this.getLista('departamento').pipe(
-      map(lista => lista.filter(d => d.paisId === paisId))
-    );
-  }
-
-  // Municipios que pertenecen a un departamento
-  getMunicipios(departamentoId: number): Observable<CatalogItem[]> {
-    return this.getLista('municipio').pipe(
-      map(lista => lista.filter(m => m.departamentoId === departamentoId))
-    );
-  }
 
   getCursos(): Observable<Course[]> {
     return this.cursos$;

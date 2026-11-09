@@ -52,15 +52,6 @@
   <mat-card>
     <h3>Residencia</h3>
     <div class="rejilla">
-      <mat-form-field appearance="outline">
-        <mat-label>País</mat-label>
-        <mat-select formControlName="pais">
-          @for (p of paises(); track p.id) {
-            <mat-option [value]="p.id">{{ p.value }}</mat-option>
-          }
-        </mat-select>
-        <mat-error>{{ mensaje(form.controls.pais) }}</mat-error>
-      </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Departamento</mat-label>
@@ -73,16 +64,6 @@
         <mat-error>{{ mensaje(form.controls.departamento) }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Municipio</mat-label>
-        <mat-select formControlName="municipio">
-          @for (m of municipios(); track m.id) {
-            <mat-option [value]="m.id">{{ m.value }}</mat-option>
-          }
-        </mat-select>
-        <mat-hint>Primero seleccione el departamento</mat-hint>
-        <mat-error>{{ mensaje(form.controls.municipio) }}</mat-error>
-      </mat-form-field>
 
       <mat-form-field appearance="outline" class="completo">
         <mat-label>Dirección de residencia</mat-label>

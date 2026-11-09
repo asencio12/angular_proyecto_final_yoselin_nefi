@@ -33,19 +33,28 @@
     { "id": 2, "value": "Ingeniería Industrial" },
     { "id": 3, "value": "Administración de Empresas" }
   ],
-  "pais": [
-    { "id": 1, "value": "Guatemala" },
-    { "id": 2, "value": "El Salvador" }
-  ],
   "departamento": [
-    { "id": 1, "value": "Guatemala", "paisId": 1 },
-    { "id": 2, "value": "Sacatepéquez", "paisId": 1 },
-    { "id": 3, "value": "San Salvador", "paisId": 2 }
-  ],
-  "municipio": [
-    { "id": 1, "value": "Guatemala", "departamentoId": 1 },
-    { "id": 2, "value": "Mixco", "departamentoId": 1 },
-    { "id": 3, "value": "Antigua Guatemala", "departamentoId": 2 },
-    { "id": 4, "value": "San Salvador", "departamentoId": 3 }
+    { "id": 1, "value": "Guatemala" },
+    { "id": 2, "value": "Sacatepéquez"},
+    { "id": 3, "value": "Alta Verapaz"},
+    { "id": 4, "value": "Baja Verapaz"},
+    { "id": 5, "value": "Chimaltenango"},
+    { "id": 6, "value": "Chiquimula"},
+    { "id": 7, "value": "Escuintla"},
+    { "id": 8, "value": "Huehuetenango"},
+    { "id": 9, "value": "Izabal"},
+    { "id": 10, "value": "Jalapa"},
+    { "id": 11, "value": "Jutiapa"},
+    { "id": 12, "value": "Peten"},
+    { "id": 13, "value": "Quetzaltenango"},
+    { "id": 14, "value": "Quiché"},
+    { "id": 15, "value": "Retahuleu"},
+    { "id": 16, "value": "Santa Rosa"},
+    { "id": 17, "value": "Sololá"},
+    { "id": 18, "value": "Suchitepequez"},
+    { "id": 19, "value": "Totonicapan"},
+    { "id": 20, "value": "Zacapa"},
+    { "id": 21, "value": "El Pogreso"},
+    { "id": 22, "value": "San Marcos"}
   ]
 }

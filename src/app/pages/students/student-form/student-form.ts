@@ -53,11 +53,8 @@ export class StudentForm {
 
   // Catálogos
   generos = toSignal(this.catalog.getLista('genero'), { initialValue: [] });
-  paises = toSignal(this.catalog.getLista('pais'), { initialValue: [] });
   carreras = toSignal(this.catalog.getLista('carrera'), { initialValue: [] });
-  departamentos = signal<CatalogItem[]>([]);
-  municipios = signal<CatalogItem[]>([]);
-
+    departamentos = toSignal(this.catalog.getLista('departamento'), { initialValue: [] as CatalogItem[] });
   // Validador de carnet duplicado (usa el servicio)
   private carnetUnico = (c: AbstractControl): ValidationErrors | null =>
     this.studentService.existe(c.value ?? '')
@@ -87,39 +84,14 @@ export class StudentForm {
     direccion: ['', [
       Validators.required, sinSoloEspacios, Validators.minLength(5), Validators.maxLength(150)
     ]],
-    pais: [null as number | null, Validators.required],
     departamento: [null as number | null, Validators.required],
-    municipio: [null as number | null, Validators.required],
     carrera: [null as number | null, Validators.required],
     semestre: [null as number | null, Validators.required],
     contactos: this.fb.array([this.nuevoContacto()], 
     Validators.minLength(1))
   });
 
-  constructor() {
-    // País -> departamentos
-    this.form.controls.pais.valueChanges.subscribe(id => {
-      this.form.controls.departamento.reset(null);
-      this.form.controls.municipio.reset(null);
-      this.departamentos.set([]);
-      this.municipios.set([]);
-      if (id !== null) {
-        this.catalog.getDepartamentos(id).subscribe(l => this.departamentos.set(l));
-      }
-    });
 
-    // Departamento -> municipios
-    this.form.controls.departamento.valueChanges.subscribe(id => {
-      this.form.controls.municipio.reset(null);
-      this.municipios.set([]);
-      if (id !== null) {
-        this.catalog.getMunicipios(id).subscribe(l => this.municipios.set(l));
-      }
-    });
-
-    const carnet = this.route.snapshot.paramMap.get('carnet');
-    if (carnet) this.cargarParaEditar(carnet);  
-  }
 
   get contactos() {
   return this.form.controls.contactos;
@@ -155,9 +127,7 @@ quitarContacto(i: number) {
   this.esEdicion = true;
   this.form.controls.carnet.disable();   // el carnet es la llave, no se edita
 
-  // Cargamos las listas encadenadas antes de asignar valores
-  this.catalog.getDepartamentos(s.pais.id).subscribe(l => this.departamentos.set(l));
-  this.catalog.getMunicipios(s.departamento.id).subscribe(l => this.municipios.set(l));
+
 
   // Una fila de contacto por cada contacto guardado
   this.contactos.clear();
@@ -172,9 +142,7 @@ quitarContacto(i: number) {
     genero: s.genero.id,
     email: s.email,
     direccion: s.direccion,
-    pais: s.pais.id,
     departamento: s.departamento.id,
-    municipio: s.municipio.id,
     carrera: s.carrera.id,
     semestre: s.semestre,
     contactos: s.contactos
@@ -212,9 +180,7 @@ quitarContacto(i: number) {
       genero: this.buscar(this.generos(), v.genero),
       email: v.email!.trim(),
       direccion: v.direccion!.trim(),
-      pais: this.buscar(this.paises(), v.pais),
       departamento: this.buscar(this.departamentos(), v.departamento),
-      municipio: this.buscar(this.municipios(), v.municipio),
       carrera: this.buscar(this.carreras(), v.carrera),
       semestre: v.semestre!,
       contactos: v.contactos.map(c => ({

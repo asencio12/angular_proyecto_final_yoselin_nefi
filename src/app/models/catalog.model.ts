@@ -12,7 +12,6 @@ export interface Catalogo {
   estado: CatalogItem[];
   periodo: CatalogItem[];
   carrera: CatalogItem[];
-  pais: CatalogItem[];
   departamento: CatalogItem[];
-  municipio: CatalogItem[];
+
 }

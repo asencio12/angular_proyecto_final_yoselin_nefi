@@ -36,9 +36,7 @@ export interface Resumen {
 interface Catalogos {
   ref: Referencias;
   genero: CatalogItem[];
-  pais: CatalogItem[];
   departamento: CatalogItem[];
-  municipio: CatalogItem[];
   carrera: CatalogItem[];
 }
 
@@ -164,9 +162,7 @@ export class BackupService {
     return forkJoin({
       ref: this.enrollments.getReferencias(),
       genero: this.catalog.getLista('genero'),
-      pais: this.catalog.getLista('pais'),
       departamento: this.catalog.getLista('departamento'),
-      municipio: this.catalog.getLista('municipio'),
       carrera: this.catalog.getLista('carrera')
     }).pipe(
       map((cat: Catalogos): ResultadoImportacion => {
@@ -279,17 +275,9 @@ export class BackupService {
     if (mf) errores.push(`${p}: "fechaNacimiento" ${mf}.`);
 
     this.itemCatalogo(raw['genero'], cat.genero, 'genero', p, errores);
-    const pais = this.itemCatalogo(raw['pais'], cat.pais, 'pais', p, errores);
     const dep = this.itemCatalogo(raw['departamento'], cat.departamento, 'departamento', p, errores);
-    const mun = this.itemCatalogo(raw['municipio'], cat.municipio, 'municipio', p, errores);
     this.itemCatalogo(raw['carrera'], cat.carrera, 'carrera', p, errores);
 
-    if (pais && dep && dep.paisId !== pais.id) {
-      errores.push(`${p}: el departamento no pertenece al país indicado.`);
-    }
-    if (dep && mun && mun.departamentoId !== dep.id) {
-      errores.push(`${p}: el municipio no pertenece al departamento indicado.`);
-    }
 
     const sem = raw['semestre'];
     if (typeof sem !== 'number' || !Number.isInteger(sem) || sem < 1 || sem > 10) {
