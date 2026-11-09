@@ -11,7 +11,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/students/student-form/student-form').then(m => m.StudentForm)
   },
   {
-    path: 'estudiantes/carnet/editar',
+    path: 'estudiantes/:carnet/editar',
     loadComponent: () => import('./pages/students/student-form/student-form').then(m => m.StudentForm)
   },
   {
@@ -23,7 +23,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/enrollments/enrollment-form/enrollment-form').then(m => m.EnrollmentForm)
   },
   {
-    path: 'inscripciones/id/editar',
+    path: 'inscripciones/:id/editar',
     loadComponent: () => import('./pages/enrollments/enrollment-form/enrollment-form').then(m => m.EnrollmentForm)
   },
   {

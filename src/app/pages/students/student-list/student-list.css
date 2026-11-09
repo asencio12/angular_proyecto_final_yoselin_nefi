@@ -1,17 +1,18 @@
 .encabezado { 
     display: flex; 
     justify-content: space-between; 
-    align-items: center; 
+    align-items: row; 
     flex-wrap: wrap; 
     gap: 8px; 
 
 }
 .filtros { 
     display: flex; 
+    flex-direction: row;
     flex-wrap: wrap; 
     gap: 12px; 
     padding: 16px 16px 0; 
-    align-items: center; 
+    align-items: flex-start; 
     margin-bottom: 16px; 
 }
 
@@ -23,7 +24,7 @@
 }
 
 table { 
-    width: 100%;
+    width: 5%;
  }
 
 .vacio { 
