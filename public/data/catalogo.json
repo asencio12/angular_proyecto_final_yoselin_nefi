@@ -33,6 +33,7 @@
     { "id": 2, "value": "Ingeniería Industrial" },
     { "id": 3, "value": "Administración de Empresas" }
   ],
+  
   "departamento": [
     { "id": 1, "value": "Guatemala" },
     { "id": 2, "value": "Sacatepéquez"},
